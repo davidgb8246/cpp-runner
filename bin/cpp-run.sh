@@ -18,7 +18,7 @@ MODE_ARG=""      # opción de la imagen tal como se reenviará (vacío = sin opc
 
 usage() {
 cat <<USAGE
-Uso: $(basename "$0") [DIR] [opciones del lanzador] [opción de la imagen]
+Uso: $([ "$(basename "$0")" = "bash" ] && echo "cpp-run.sh" || basename "$0") [DIR] [opciones del lanzador] [opción de la imagen]
 
 Opciones del lanzador:
   -d, --dir DIR          Directorio del proyecto (por defecto: el actual; también
