@@ -1,0 +1,22 @@
+CXX = g++
+CXXFLAGS = -std=c++17 -Wall -Wextra -Wno-deprecated -O2
+CPPFLAGS = $(shell find . -type d -not -path './.git*' -not -path './build*' | sed 's|^.|-I.|')
+
+SOURCES = $(shell find . -type f -name '*.cpp' -not -path './.git/*' -not -path './build/*' | sort)
+OBJECTS = $(SOURCES:.cpp=.o)
+DEPS = $(OBJECTS:.o=.d)
+
+all: a.out
+
+a.out: $(OBJECTS)
+	$(CXX) $(OBJECTS) -o $@
+
+%.o: %.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -MMD -MP -c $< -o $@
+
+-include $(DEPS)
+
+clean:
+	rm -f $(OBJECTS) $(DEPS) a.out
+
+.PHONY: all clean
